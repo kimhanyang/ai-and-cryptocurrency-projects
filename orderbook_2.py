@@ -222,24 +222,6 @@ def parse_args():
 
 session = init_session()
 
-'''
-csv_dir: 원하는 파일 저장 위치(디텍토리)를 입력해주세요. ('.'는 코드가 실행되는 현재 위치라는 뜻입니다)
-ex_data: 현재 bithumb에서 BTC와 ETH로 준비되어 있어요.
-starting_time: 설정한 시작 시간까지 대기했다가 수집하는 구조입니다. 원하시는 값으로 맞춰주세요.
-               (실행되는 환경 설정(timezone 등...)에 따라 시간을 다르게 받는 것으로 보입니다,,)
-level: 저희 과제 설명에는 15로 설정하려고 하셔서 그대로 두시면 돼요. (받는 개수)
-interval: 현재 5초 간격으로 설정되어 있어요.
-
-* Google Colab, Jupyter에서 모두 작동 확인했어요 (제가 Visual Code가 없어서 나중에 시간 되면 확인해볼게요!)
-* 조금 더 확인하기 쉽도록 안내사항과 fetch delay(수집 시간 오차)를 출력하는 기능을 추가했어요
-* 아직은 직접 수동으로 실행 종료해야 됩니다 (24시간이 지난 후 종료하기)
-
-1. 정해진 시작 시간에 맞춰서 실행이 되는지
-2. 파일 2개가 정해진 양식에 맞춰서 만들어지는지
-3. 날짜가 바뀌었을 때 새로운 파일이 만들어지는지
-4. 5초마다 각각 15개씩 정보를 받는지(bid: 15, ask: 15)
-'''
-
 csv_dir = '.' #In colab, this starts in the /content directory.
 ex_data = [['1', 'bithumb', 'BTC'], ['2', 'bithumb', 'ETH']] #WIP; this could be changed.
 starting_time = {'hour': 0, 'minute': 0, 'second': 0, 'microsecond': 0} #Set this in 00:00.
