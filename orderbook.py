@@ -17,7 +17,7 @@
  from requests.adapters import HTTPAdapter
  from requests.packages.urllib3.util.retry import Retry
  def agg_order_book(bids, asks):
-고성민, 김도혁
+
 group_bid = (bids.groupby('price').sum()).reset_index()
  group_bid = group_bid.sort_values('price', ascending=False)
  group_ask = (asks.groupby('price').sum()).reset_index()
