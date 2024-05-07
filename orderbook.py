@@ -173,13 +173,11 @@ verify=False, timeout=1)).json()
     return session
  def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--currency', help="choose crypto-currency", choices = 
-('BTC','ETH'), dest='currency', action="store")
+    parser.add_argument('--currency', help="choose crypto-currency", choices = ('BTC','ETH'), dest='currency', action="store")
     return parser.parse_args()
  session = init_session()
  csv_dir = '.' #In colab, this starts in the /content directory.
- ex_data = [['1', 'bithumb', 'BTC'], ['2', 'bithumb', 'ETH']] #WIP; this could be 
-changed.
+ ex_data = [['1', 'bithumb', 'BTC'], ['2', 'bithumb', 'ETH']] #WIP; this could be changed.
  starting_time = {'hour': 0, 'minute': 0, 'second': 0, 'microsecond': 0} #Set this in 00:00.
  level = 15
  interval = 5
@@ -206,8 +204,7 @@ changed.
     print("Data collection will start in:", delay)
     time.sleep(delay.total_seconds())
     print("Starting...")
-    print("Please come back at:", datetime.datetime.now(tz=kst_tz) + 
-datetime.timedelta(days=1))
+    print("Please come back at:", datetime.datetime.now(tz=kst_tz) + datetime.timedelta(days=1))
     pull_csv_book_trade()
  if __name__ == '__main__':
     main()
