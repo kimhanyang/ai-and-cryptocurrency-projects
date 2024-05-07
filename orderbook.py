@@ -18,7 +18,7 @@
  from requests.packages.urllib3.util.retry import Retry
  def agg_order_book(bids, asks):
 
-group_bid = (bids.groupby('price').sum()).reset_index()
+ group_bid = (bids.groupby('price').sum()).reset_index()
  group_bid = group_bid.sort_values('price', ascending=False)
  group_ask = (asks.groupby('price').sum()).reset_index()
  group_ask = group_ask.sort_values('price', ascending=True)
@@ -69,8 +69,7 @@ group_bid = (bids.groupby('price').sum()).reset_index()
  #This part of the code is too messy; might rework on this
  first_seq = True
  df1 = ''
- bithumb_empty_df = pd.DataFrame(columns=['price', 'total', 'transaction_date', 'type', 
-'units_traded'])
+ bithumb_empty_df = pd.DataFrame(columns=['price', 'total', 'transaction_date', 'type', 'units_traded'])
  def bithumb_live_trade(data, req_timestamp):
     global df1
     global first_seq
@@ -104,14 +103,12 @@ group_bid = (bids.groupby('price').sum()).reset_index()
     diff = agg_diff_trade(diff)
     diff['timestamp'] = req_timestamp
     df['timestamp'] = req_timestamp
-    return diff[['price', 'total', 'transaction_date', 'type', 'units_traded', 'timestamp', 
-'count']], df
+    return diff[['price', 'total', 'transaction_date', 'type', 'units_traded', 'timestamp', 'count']], df
  def write_csv(fn, df):
     need_header = not os.path.exists(fn)
     df.to_csv(fn, index=False, header=need_header, mode='a')
  def http_get(url):
-    return (session.get(url, headers={ 'User-Agent': 'Mozilla/5.0' }, verify=False, 
-timeout=1)).json()
+    return (session.get(url, headers={ 'User-Agent': 'Mozilla/5.0' }, verify=False, timeout=1)).json()
  def get_book_trade(ex, url, req_timestamp):
     book = trade = {}
     try:
@@ -158,12 +155,10 @@ verify=False, timeout=1)).json()
             book, trade = _dict_book_trade[id]
             #"book-yyyy-mm-dd-exchange-market.csv"
             #"book-2021-04-22-bithumb-btc.csv"
-            book_fn = '%s/book-%s-%s-%s.csv'% (csv_dir, req_time, ex_market, 
-currency)
+            book_fn = '%s/book-%s-%s-%s.csv'% (csv_dir, req_time, ex_market, currency)
             book_df = bithumb_live_book(book, req_timestamp)
             write_csv(book_fn, book_df)
-            #trade_fn = '%s/%s-only-%s-%s-trade.csv'% (csv_dir, req_time, 
-ex_market, currency)
+            #trade_fn = '%s/%s-only-%s-%s-trade.csv'% (csv_dir, req_time, ex_market, currency)
             #trade_df, raw_trade_df = bithumb_live_trade(trade, req_timestamp)
             #if trade_df is None:
             #    continue
@@ -185,8 +180,7 @@ ex_market, currency)
  csv_dir = '.' #In colab, this starts in the /content directory.
  ex_data = [['1', 'bithumb', 'BTC'], ['2', 'bithumb', 'ETH']] #WIP; this could be 
 changed.
- starting_time = {'hour': 0, 'minute': 0, 'second': 0, 'microsecond': 0} #Set this in 
-00:00.
+ starting_time = {'hour': 0, 'minute': 0, 'second': 0, 'microsecond': 0} #Set this in 00:00.
  level = 15
  interval = 5
  _dict_url = { #hard-coded all the urls
