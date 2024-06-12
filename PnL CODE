@@ -1,0 +1,29 @@
+import pandas as pd
+# bid 0, ask 1
+# amount = quantity * price * side - fee
+# PnL is sum of all profits, cumulative: df['size'] * df[‘price’] * -1 * df[‘0 or 1']
+
+# Read csv file and preprocess.
+df = pd.read_csv('ai-crypto-project-3-live-btc-krw.csv')
+df['timestamp'] = pd.to_datetime(df['timestamp']).dt.floor('d')
+df['remains'] = (df['quantity'] * (-2 * df['side'] + 1)) # Multiply 1 when bid, -1 when ask.
+
+# Create a new dataFrame grouped by each date.
+df_timestamps = pd.Series(df['timestamp'].unique(), name='timestamp')
+df_amounts = df.groupby('timestamp')['amount'].sum().reset_index(name='amount')['amount']
+df_remains = df.groupby('timestamp')['remains'].sum().reset_index(name='remains')['remains']
+df_PnL = pd.concat([df_timestamps, df_amounts, df_remains], axis = 1)
+
+# Cumulate the values.
+df_cumPnL = df_PnL['amount'].cumsum().rename('cumulative_PnL')
+df_cumRemains = df_PnL['remains'].cumsum().rename('cumulative_remains')
+df_PnL = pd.concat([df_PnL, df_cumPnL, df_cumRemains], axis = 1)
+
+# Results
+df_last = df_PnL.iloc[-1]
+
+print('Summary of March, 2024')
+print('-' * 50)
+print('PnL:', df_last['cumulative_PnL'])
+print('Remaining Bitcoins:', df_last['cumulative_remains'])
+print('Revised PnL:', df_last['cumulative_PnL'] + df_last['cumulative_remains'] * df['price'].iloc[-1])
